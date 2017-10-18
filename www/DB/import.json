@@ -1,0 +1,242 @@
+{
+  "category" : {
+    "cat01" : "South Indian",
+    "cat02" : "Drinks",
+    "cat03" : "Chinese",
+    "cat04" : "Chats",
+    "cat05" : "Snacks",
+    "cat06" : "Desserts"
+  },
+  "featured" : {
+    "item1" : "slide_1",
+    "item2" : "slide_2"
+  },
+  "menu" : {
+    "item1" : {
+      "available" : true,
+      "category" : "cat01",
+      "description" : "item1 description",
+      "image" : "masalaDosa",
+      "name" : "Masala Dosa",
+      "price" : 30,
+      "stock" : 100
+    },
+    "item10" : {
+      "available" : true,
+      "category" : "cat01",
+      "description" : "item2 description",
+      "image" : "keralaParatha",
+      "name" : "Kerala Paratha",
+      "price" : 50,
+      "stock" : 100
+    },
+    "item11" : {
+      "available" : true,
+      "category" : "cat01",
+      "description" : "item3 description",
+      "image" : "idli",
+      "name" : "Idli",
+      "price" : 20,
+      "stock" : 100
+    },
+    "item12" : {
+      "available" : true,
+      "category" : "cat01",
+      "description" : "item4 description",
+      "image" : "vada",
+      "name" : "Vada",
+      "price" : 20,
+      "stock" : 100
+    },
+    "item13" : {
+      "available" : true,
+      "category" : "cat01",
+      "description" : "item5 description",
+      "image" : "vegBiriyani",
+      "name" : "Veg Biriyani",
+      "price" : 50,
+      "stock" : 100
+    },
+    "item14" : {
+      "available" : true,
+      "category" : "cat01",
+      "description" : "item6 description",
+      "image" : "friedRice",
+      "name" : "Fried Rice",
+      "price" : 50,
+      "stock" : 100
+    },
+    "item2" : {
+      "available" : true,
+      "category" : "cat02",
+      "description" : "item8 description",
+      "image" : "limeSoda",
+      "name" : "Fresh Lime Soda",
+      "price" : 20,
+      "stock" : 100
+    },
+    "item20" : {
+      "available" : true,
+      "category" : "cat02",
+      "description" : "item8 description",
+      "image" : "freshJuice",
+      "name" : "Fresh Juice",
+      "price" : 30,
+      "stock" : 100
+    },
+    "item21" : {
+      "available" : true,
+      "category" : "cat02",
+      "description" : "item8 description",
+      "image" : "tea",
+      "name" : "Tea",
+      "price" : 10,
+      "stock" : 100
+    },
+    "item21" : {
+      "available" : true,
+      "category" : "cat02",
+      "description" : "item8 description",
+      "image" : "coffee",
+      "name" : "Coffee",
+      "price" : 10,
+      "stock" : 100
+    },
+    "item3" : {
+      "available" : true,
+      "category" : "cat03",
+      "description" : "item8 description",
+      "image" : "gobiManchurian",
+      "name" : "Gobi Manchurian",
+      "price" : 70,
+      "stock" : 100
+    },
+    "item30" : {
+      "available" : true,
+      "category" : "cat03",
+      "description" : "item8 description",
+      "image" : "babyCornManchurian",
+      "name" : "Baby Corn Manchurian",
+      "price" : 70,
+      "stock" : 100
+    },
+    "item31" : {
+      "available" : true,
+      "category" : "cat03",
+      "description" : "item8 description",
+      "image" : "schezwanNoodles",
+      "name" : "Schezwan Noodles",
+      "price" : 60,
+      "stock" : 100
+    },
+    "item32" : {
+      "available" : true,
+      "category" : "cat03",
+      "description" : "item8 description",
+      "image" : "paneerRoll",
+      "name" : "Paneer Roll",
+      "price" : 40,
+      "stock" : 100
+    },
+    "item33" : {
+      "available" : true,
+      "category" : "cat03",
+      "description" : "item8 description",
+      "image" : "steamedMomos",
+      "name" : "Steamed Momos",
+      "price" : 50,
+      "stock" : 100
+    },
+    "item4" : {
+      "available" : true,
+      "category" : "cat04",
+      "description" : "item8 description",
+      "image" : "sevPuri",
+      "name" : "Sev Puri",
+      "price" : 20,
+      "stock" : 100
+    },
+    "item40" : {
+      "available" : true,
+      "category" : "cat04",
+      "description" : "item8 description",
+      "image" : "dahiPuri",
+      "name" : "Dahi Puri",
+      "price" : 30,
+      "stock" : 100
+    },
+    "item41" : {
+      "available" : true,
+      "category" : "cat04",
+      "description" : "item8 description",
+      "image" : "paniPuri",
+      "name" : "Pani Puri",
+      "price" : 20,
+      "stock" : 100
+    },
+    "item42" : {
+      "available" : true,
+      "category" : "cat04",
+      "description" : "item8 description",
+      "image" : "bhelPuri",
+      "name" : "Bhel Puri",
+      "price" : 20,
+      "stock" : 100
+    },
+    "item5" : {
+      "available" : true,
+      "category" : "cat05",
+      "description" : "item8 description",
+      "image" : "paneerSandwich",
+      "name" : "Paneer Sandwich",
+      "price" : 50,
+      "stock" : 100
+    },
+    "item50" : {
+      "available" : true,
+      "category" : "cat05",
+      "description" : "item8 description",
+      "image" : "mangaloreBajji",
+      "name" : "Mangalore Bajji",
+      "price" : 30,
+      "stock" : 100
+    },
+    "item51" : {
+      "available" : true,
+      "category" : "cat05",
+      "description" : "item8 description",
+      "image" : "frenchFries",
+      "name" : "French Fries",
+      "price" : 50,
+      "stock" : 100
+    },
+    "item6" : {
+      "available" : true,
+      "category" : "cat06",
+      "description" : "item8 description",
+      "image" : "chocolateBrownie",
+      "name" : "Chocolate Brownie",
+      "price" : 80,
+      "stock" : 100
+    },
+    "item60" : {
+      "available" : true,
+      "category" : "cat06",
+      "description" : "item8 description",
+      "image" : "chocolateMousse",
+      "name" : "Chocolate Mousse",
+      "price" : 50,
+      "stock" : 100
+    },
+    "item61" : {
+      "available" : true,
+      "category" : "cat06",
+      "description" : "item8 description",
+      "image" : "iceCream",
+      "name" : "Ice Cream",
+      "price" : 20,
+      "stock" : 100
+    }
+
+  }
+}
