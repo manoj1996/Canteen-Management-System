@@ -39,7 +39,7 @@ angular.module('app.controllers', [])
           //Email
           firebase.auth().signInWithEmailAndPassword(cred.email,cred.password).then(function(result) {
 
-                // You dont need to save the users session as firebase handles it
+                // You don't need to save the users session as firebase handles it
                 // You only need to :
                 // 1. clear the login page history from the history stack so that you cant come back
                 // 2. Set rootScope.extra;
@@ -299,11 +299,11 @@ angular.module('app.controllers', [])
       if (user) {
         $scope.user_info = user;
 
-        fireBaseData.refOrder()
+        fireBaseData.refTempOrder()
           .orderByChild('user_id')
           .startAt($scope.user_info.uid).endAt($scope.user_info.uid)
           .once('value', function (snapshot) {
-            $scope.orders = snapshot.val();
+            $scope.temp_orders = snapshot.val();
             $scope.$apply();
           });
           sharedUtils.hideLoading();
@@ -484,6 +484,9 @@ angular.module('app.controllers', [])
     $rootScope.extras=false;
   })
 
+.controller('PayUMoneyCtrl', function($scope,$rootScope) {
+  $rootScope.extras=true;
+})
 .controller('checkoutCtrl', function($scope,$rootScope,sharedUtils,$state,$firebaseArray,
                                      $ionicHistory,fireBaseData, $ionicPopup,sharedCartService) {
 
@@ -498,7 +501,7 @@ angular.module('app.controllers', [])
     });
 
     $scope.payments = [
-      {id: 'PayTM', name: 'PayTM'},
+      {id: 'PayUMoney', name: 'PayUMoney'},
       {id: 'COD', name: 'COD'}
     ];
     realAddress = "";
@@ -559,21 +562,48 @@ angular.module('app.controllers', [])
         status: "Queued",
         order_time:datetime,
         user_address:block + " Block",
-        user_phone:bookingPhoneNumber
+        user_phone:bookingPhoneNumber,
+        user_orderComp:$scope.user_info.uid + datetime + sharedCartService.cart_items[i].$id
+      });
+
+      fireBaseData.refTempOrder().push({
+
+        //Product data is hardcoded for simplicity
+        product_name: sharedCartService.cart_items[i].item_name,
+        product_price: sharedCartService.cart_items[i].item_price,
+        product_image: sharedCartService.cart_items[i].item_image,
+        product_id: sharedCartService.cart_items[i].$id,
+
+        //item data
+        item_qty: sharedCartService.cart_items[i].item_qty,
+
+        //Order data
+        user_id: $scope.user_info.uid,
+        user_name:$scope.user_info.displayName,
+        address_id: realAddress,
+        payment_id: realPayment,
+        status: "Queued",
+        order_time:datetime,
+        user_address:block + " Block",
+        user_phone:bookingPhoneNumber,
+        user_orderComp:$scope.user_info.uid + datetime + sharedCartService.cart_items[i].$id
       });
 
     }
 
     //Remove users cart
     fireBaseData.refCart().child($scope.user_info.uid).remove();
-
-    sharedUtils.showAlert("Info", "Order Successfull");
+    sharedUtils.showAlert(realPayment);
+    if (realPayment.localeCompare("PayUMoney") == 0) {
+      $state.go('PayUMoney', {}, {location: "replace", reload: true})
+    }
+    //sharedUtils.showAlert("Info", "Order Successfull");
 
     // Go to past order page
-    $ionicHistory.nextViewOptions({
-      historyRoot: true
-    });
-    $state.go('lastOrders', {}, {location: "replace", reload: true});
+    // $ionicHistory.nextViewOptions({
+    //   historyRoot: true
+    // });
+    // $state.go('lastOrders', {}, {location: "replace", reload: true});
 
 
 

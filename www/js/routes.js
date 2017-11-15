@@ -79,6 +79,13 @@ angular.module('app.routes', [])
     controller: 'supportCtrl'
   })
 
+  .state('PayUMoney', {
+    url: '/page19',
+    templateUrl: 'templates/PayUMoney.html',
+    controller: 'PayUMoneyCtrl'
+  })
+
+
   .state('checkout', {
     url: '/page16',
     templateUrl: 'templates/checkout.html',
@@ -94,6 +101,7 @@ angular.module('app.routes', [])
       }
     }
   })
+
 
 $urlRouterProvider.otherwise('/page1/page5')
 

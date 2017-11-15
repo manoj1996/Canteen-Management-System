@@ -8,7 +8,7 @@
 angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives','firebase'])
 .config(function($ionicConfigProvider) {
     //Added config
-    //$ionicConfigProvider.views.maxCache(5);
+    $ionicConfigProvider.views.maxCache(0);
     $ionicConfigProvider.scrolling.jsScrolling(false);
     $ionicConfigProvider.tabs.position('bottom'); // other values: top
 })

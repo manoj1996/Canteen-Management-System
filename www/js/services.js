@@ -7,6 +7,7 @@ angular.module('app.services', [])
     refUser = new Firebase("https://seproject-76942.firebaseio.com/users"),
     refCategory = new Firebase("https://seproject-76942.firebaseio.com/category"),
     refOrder = new Firebase("https://seproject-76942.firebaseio.com/orders"),
+    refTempOrder = new Firebase("https://seproject-76942.firebaseio.com/temp_orders"),
     refFeatured = new Firebase("https://seproject-76942.firebaseio.com/featured"),
     refMenu = new Firebase("https://seproject-76942.firebaseio.com/menu");
   return {
@@ -24,6 +25,9 @@ angular.module('app.services', [])
     },
     refOrder: function() {
       return refOrder;
+    },
+    refTempOrder: function() {
+      return refTempOrder;
     },
     refFeatured: function() {
       return refFeatured;
