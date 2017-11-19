@@ -1,3 +1,17 @@
 <ion-view style="" class=" " id="page8" title="Offers">
-    <ion-content class="has-header" padding="true"></ion-content>
+    <ion-content class="has-header" padding="true">
+        <ion-list ng-repeat="item in offers">
+            
+                    <ion-item class = "item-text-wrap">
+            
+                      <p> &#8377;{{item.Price}}</a>
+            
+                      <h4> {{item.Title}} </h4>
+                      <p>Description: {{item.Description}}</p>
+            
+            
+                    </ion-item>
+            
+                  </ion-list>
+    </ion-content>
 </ion-view>

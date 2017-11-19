@@ -177,12 +177,23 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('offersCtrl', function($scope,$rootScope) {
+.controller('offersCtrl', function($scope,$rootScope,fireBaseData,sharedUtils) {
 
     //We initialise it on all the Main Controllers because, $rootScope.extra has default value false
     // So if you happen to refresh the Offer page, you will get $rootScope.extra = false
     //We need $ionicSideMenuDelegate.canDragContent(true) only on the menu, ie after login page
     $rootScope.extras=true;
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        $scope.user_info = user;
+        fireBaseData.refOffers()
+          .once('value', function (snapshot) {
+            $scope.offers = snapshot.val();
+            $scope.$apply();
+          });
+        sharedUtils.hideLoading();
+      }
+    });
 })
 
 .controller('indexCtrl', function($scope,$rootScope,sharedUtils,$ionicHistory,$state,$ionicSideMenuDelegate,sharedCartService) {
@@ -480,9 +491,42 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('forgotPasswordCtrl', function($scope,$rootScope) {
-    $rootScope.extras=false;
-  })
+.controller('forgotPasswordCtrl', function($scope, $ionicLoading) {
+  $scope.user = {
+    email: ''
+  };
+  $scope.errorMessage = null;
+
+  $scope.resetPassword = function() {
+    $scope.errorMessage = null;
+
+    $ionicLoading.show({
+      template: 'Please wait...'
+    });
+
+    firebase.auth().sendPasswordResetEmail($scope.user.email)
+        .then(showConfirmation)
+        .catch(handleError);
+  };
+
+  function showConfirmation() {
+    $scope.emailSent = true;
+    $ionicLoading.hide();
+  }
+
+  function handleError(error) {
+    switch (error.code) {
+      case 'INVALID_EMAIL':
+      case 'INVALID_USER':
+        $scope.errorMessage = 'Invalid email';
+        break;
+      default:
+        $scope.errorMessage = 'Invalid email';
+    }
+
+    $ionicLoading.hide();
+  }
+})
 
 .controller('PayUMoneyCtrl', function($scope,$rootScope) {
   $rootScope.extras=true;

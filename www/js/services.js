@@ -10,6 +10,7 @@ angular.module('app.services', [])
     refTempOrder = new Firebase("https://seproject-76942.firebaseio.com/temp_orders"),
     refFeatured = new Firebase("https://seproject-76942.firebaseio.com/featured"),
     refMenu = new Firebase("https://seproject-76942.firebaseio.com/menu");
+    refOffers = new Firebase("https://seproject-76942.firebaseio.com/offers");
   return {
     ref: function() {
       return ref;
@@ -34,6 +35,9 @@ angular.module('app.services', [])
     },
     refMenu: function() {
       return refMenu;
+    },
+    refOffers: function() {
+      return refOffers;
     }
   }
 })

@@ -8,11 +8,14 @@
 
           <img  ng-src="{{'img/fk/'+ item.product_image +'.jpg'}}" >
 
-          <a class="badge badge-balanced" style="position: absolute;right:0;" >{{item.status}}</a>
+          <a class="badge badge-balanced" style="position: absolute;right:0;top:25%" >{{item.status}}</a>
 
           <h4> {{item.product_name}} </h4>
           <p>Qty: {{item.item_qty}}  Price: &#8377; {{item.product_price}}</p>
-
+          <ion-item class = "item-text-wrap">
+            <p>User Id: {{item.user_id}}</p>
+            <p>Order Time: {{item.order_time}}</p>
+          </ion-item>
 
         </ion-item>
 
