@@ -85,6 +85,12 @@ angular.module('app.routes', [])
     controller: 'PayUMoneyCtrl'
   })
 
+  .state('transactionFailure', {
+    url: '/page21',
+    templateUrl: 'templates/payUMoneyFailure.html',
+    controller: 'payUMoneyFailureCtrl'
+  })
+
 
   .state('checkout', {
     url: '/page16',

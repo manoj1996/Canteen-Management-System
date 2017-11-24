@@ -1,5 +1,4 @@
 angular.module('app.controllers', [])
-
 .controller('loginCtrl', function($scope,$rootScope,$ionicHistory,sharedUtils,$state,$ionicSideMenuDelegate) {
     $rootScope.extras = false;  // For hiding the side bar and nav icon
 
@@ -45,7 +44,8 @@ angular.module('app.controllers', [])
                 // 2. Set rootScope.extra;
                 // 3. Turn off the loading
                 // 4. Got to menu page
-
+              $rootScope.regEmail = cred.email;
+              console.log(cred.email);
               $ionicHistory.nextViewOptions({
                 historyRoot: true
               });
@@ -255,11 +255,9 @@ angular.module('app.controllers', [])
     }
 
   })
-
 .controller('myCartCtrl', function($scope,$rootScope,$state,sharedCartService) {
 
     $rootScope.extras=true;
-
     //Check if user already logged in
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
@@ -268,12 +266,15 @@ angular.module('app.controllers', [])
 
         $scope.get_qty = function() {
           $scope.total_qty=0;
-          $scope.total_amount=0;
+          $rootScope.total_amount=0;
+          $rootScope.product_info = "";
 
           for (var i = 0; i < sharedCartService.cart_items.length; i++) {
             $scope.total_qty += sharedCartService.cart_items[i].item_qty;
-            $scope.total_amount += (sharedCartService.cart_items[i].item_qty * sharedCartService.cart_items[i].item_price);
+            $rootScope.total_amount += (sharedCartService.cart_items[i].item_qty * sharedCartService.cart_items[i].item_price);
+            $rootScope.product_info += sharedCartService.cart_items[i].item_name + "\t";
           }
+          
           return $scope.total_qty;
         };
       }
@@ -528,9 +529,118 @@ angular.module('app.controllers', [])
   }
 })
 
-.controller('PayUMoneyCtrl', function($scope,$rootScope) {
+.controller('PayUMoneyCtrl', function($scope,$rootScope,$state,sharedUtils) {
+
+
+  $rootScope.extras=true;
+  var form = document.createElement("form");
+  form.method = "POST";
+  form.action = "https://test.payu.in/_payment";
+  var payUMoneyKey = document.createElement("input");
+  var payUMoneyTxnId = document.createElement("input");
+  var payUMoneyAmount = document.createElement("input");
+  var payUMoneyProductInfo = document.createElement("input");
+  var payUMoneyFirstName = document.createElement("input");
+  var payUMoneyEmail = document.createElement("input");
+  var payUMoneyPhone = document.createElement("input");
+  var payUMoneySUrl = document.createElement("input");
+  var payUMoneyFUrl = document.createElement("input");
+  var payUMoneyHash = document.createElement("input");
+  var payUMoneyServiceProvider = document.createElement("input");
+
+  payUMoneyKey.name = "key";
+  payUMoneyTxnId.name = "txnid";
+  payUMoneyAmount.name = "amount";
+  payUMoneyProductInfo.name = "productinfo";
+  payUMoneyFirstName.name = "firstname";
+  payUMoneyEmail.name = "email";
+  payUMoneyPhone.name = "phone";
+  payUMoneySUrl.name = "surl";
+  payUMoneyFUrl.name = "furl";
+  payUMoneyHash.name = "hash";
+  payUMoneyServiceProvider.name = "service_provider";
+
+  // payUMoneyKey.value = "K88iBbMD";
+  payUMoneyKey.value = "iaomiM3O";
+  payUMoneyTxnId.value = $rootScope.transactionID;
+  console.log(payUMoneyTxnId.value);
+  payUMoneyAmount.value = $rootScope.total_amount;
+  console.log(payUMoneyAmount.value);
+  payUMoneyProductInfo.value = $rootScope.product_info;
+  console.log(payUMoneyProductInfo.value);
+  payUMoneyFirstName.value = $rootScope.user_name;
+  console.log(payUMoneyFirstName.value);
+  payUMoneyEmail.value = $rootScope.regEmail;
+  console.log(payUMoneyEmail.value);
+  payUMoneyPhone.value = $rootScope.payUMoneyNumber;
+  payUMoneySUrl.value = $state.go('menu2', {}, {location: "replace", reload: true});
+  payUMoneyFUrl.value = $state.go('transactionFailure', {}, {location: "replace", reload: true});
+
+  // hashSequence = payUMoneyKey.value | payUMoneyTxnId.value | payUMoneyAmount.value | payUMoneyProductInfo.value | payUMoneyFirstName.value | payUMoneyEmail.value | "" | "" | "" | "" | "" | "" | "" | "" | "" | "" | "IhB112kPHg";
+  hashSequence = payUMoneyKey.value + "|" + payUMoneyTxnId.value + "|" + payUMoneyAmount.value + "|" + payUMoneyProductInfo.value + "|" + payUMoneyFirstName.value + "|" + payUMoneyEmail.value + "|||||||||||" + "BbcwaIDm8J";
+  
+  console.log(hashSequence);
+  
+  var shaObj = new jsSHA("SHA-512", "TEXT");
+  shaObj.update(hashSequence);
+  $hash = shaObj.getHash("HEX");
+  // payUMoneyHash.value = $hash;
+  payUMoneyTxnId.value = "Zm7jhsrRbrVly99Kbn8XxKUTBTZ2:24/11/2017 @ 12:31:46-Friday";
+  payUMoneyHash.value = "3217d1cd2e8f603ed335498dab1c418f3733745d8178887e067bdc1982b0f5fc7913fa52864796c4bec17f0c2668c9ebcd8ece0eafe7db856cb7995b21c75973";
+  console.log($hash);
+
+  // var hash = new sha512().create();
+  // hash.update(hashSequence);
+  // console.log(hash.hex());
+
+  payUMoneyServiceProvider.value = "payu_paisa";
+
+  form.appendChild(payUMoneyKey);
+  form.appendChild(payUMoneyTxnId);
+  form.appendChild(payUMoneyAmount);
+  form.appendChild(payUMoneyProductInfo);
+  form.appendChild(payUMoneyFirstName);
+  form.appendChild(payUMoneyEmail);
+  form.appendChild(payUMoneyPhone);
+  form.appendChild(payUMoneySUrl);
+  form.appendChild(payUMoneyFUrl);
+  form.appendChild(payUMoneyHash);
+  form.appendChild(payUMoneyServiceProvider);
+
+  document.body.appendChild(form);
+  sharedUtils.showAlert(payUMoneyHash.value);
+  form.submit();
+  // sendRequest();
+  // $scope.sendRequest = function() {
+  //     var dataValue = $("#keyName").val();
+  //     $.ajax({
+  //                 type : 'POST',
+  //                 //remove the .php from results.php.php
+  //                 url : "https://test.payu.in/_payment",
+  //                 //Add the request header
+  //                 headers : {
+  //                     Authorization : "pbb5+56Z43tfzlbYNQ5bBxjs7gF7o8hB6FGMRn8BAwI="
+  //                 },
+  //                 contentType : 'application/x-www-form-urlencoded',
+  //                 //Add form data
+  //                 data : {keyName : dataValue},
+  //                 success : function(response) {
+  //                     console.log(response);
+  //                 },
+  //                 error : function(xhr, status, error) {
+  //                     var err = eval("(" + xhr.responseText + ")");
+  //                     console.log(err);                   
+  //                 }
+  //             }); //End of Ajax
+  //     };  
+
+
+})
+
+.controller('payUMoneyFailureCtrl', function($scope,$rootScope) {
   $rootScope.extras=true;
 })
+
 .controller('checkoutCtrl', function($scope,$rootScope,sharedUtils,$state,$firebaseArray,
                                      $ionicHistory,fireBaseData, $ionicPopup,sharedCartService) {
 
@@ -575,6 +685,7 @@ angular.module('app.controllers', [])
         }
       }
     }
+    $rootScope.payUMoneyNumber = bookingPhoneNumber;
     tStamp = new Date();
 
     days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -585,6 +696,7 @@ angular.module('app.controllers', [])
       + tStamp.getMinutes() + ":"
       + tStamp.getSeconds() + "-"
       + days[tStamp.getDay()];
+      $rootScope.user_name = $scope.user_info.displayName;
     for (i = 0; i < sharedCartService.cart_items.length; i++) {
       //Add cart item to order table
       fireBaseData.refOrder().push({
@@ -634,20 +746,25 @@ angular.module('app.controllers', [])
       });
 
     }
+    
+    $rootScope.transactionID = $scope.user_info.uid + ":" + datetime;
 
     //Remove users cart
     fireBaseData.refCart().child($scope.user_info.uid).remove();
-    sharedUtils.showAlert(realPayment);
+    // sharedUtils.showAlert(realPayment);
     if (realPayment.localeCompare("PayUMoney") == 0) {
       $state.go('PayUMoney', {}, {location: "replace", reload: true})
     }
-    //sharedUtils.showAlert("Info", "Order Successfull");
+    else{
+      sharedUtils.showAlert("Info", "Order Successfull");
 
-    // Go to past order page
-    // $ionicHistory.nextViewOptions({
-    //   historyRoot: true
-    // });
-    // $state.go('lastOrders', {}, {location: "replace", reload: true});
+    //Go to past order page
+    $ionicHistory.nextViewOptions({
+      historyRoot: true
+    });
+    $state.go('lastOrders', {}, {location: "replace", reload: true});
+    }
+    
 
 
 
